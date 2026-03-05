@@ -1,4 +1,4 @@
-# Dummy Bank + RAG Chatbot Demo
+# Bank + RAG Chatbot using langchain 
 
 End-to-end demo banking website with an embedded chatbot widget powered by FastAPI + FAISS + OpenAI.
 
