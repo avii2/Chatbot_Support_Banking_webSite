@@ -13,8 +13,8 @@ export default {
         }
       },
       fontFamily: {
-        display: ['Sora', 'sans-serif'],
-        body: ['Manrope', 'sans-serif']
+        display: ['Roboto', 'sans-serif'],
+        body: ['Roboto', 'sans-serif']
       },
       boxShadow: {
         soft: '0 16px 38px -24px rgba(10, 35, 66, 0.55)'

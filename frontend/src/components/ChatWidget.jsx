@@ -4,6 +4,7 @@ import logochatbot from '../../logochatbot.png'
 const SESSION_STORAGE_KEY = 'dummybank_chat_session_id'
 const LANGUAGE_STORAGE_KEY = 'dummybank_chat_language'
 const DEFAULT_LANGUAGE = 'en-IN'
+const REQUEST_TIMEOUT_MS = 25000
 
 const LANGUAGES = [
   { label: 'English', code: 'en-IN' },
@@ -27,15 +28,22 @@ function getSpeechRecognitionCtor() {
 }
 
 function getOrCreateSessionId() {
-  const existing = localStorage.getItem(SESSION_STORAGE_KEY)
+  const existing = sessionStorage.getItem(SESSION_STORAGE_KEY)
   if (existing) return existing
+
+  // Clean up old persistent session/history from earlier app versions.
+  const legacySessionId = localStorage.getItem(SESSION_STORAGE_KEY)
+  if (legacySessionId) {
+    localStorage.removeItem(historyKey(legacySessionId))
+    localStorage.removeItem(SESSION_STORAGE_KEY)
+  }
 
   const generated =
     typeof crypto !== 'undefined' && crypto.randomUUID
       ? crypto.randomUUID()
       : `session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
 
-  localStorage.setItem(SESSION_STORAGE_KEY, generated)
+  sessionStorage.setItem(SESSION_STORAGE_KEY, generated)
   return generated
 }
 
@@ -79,7 +87,7 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (!sessionId) return
-    const saved = localStorage.getItem(historyKey(sessionId))
+    const saved = sessionStorage.getItem(historyKey(sessionId))
     if (!saved) return
 
     try {
@@ -88,13 +96,13 @@ export default function ChatWidget() {
         setMessages(parsed)
       }
     } catch {
-      localStorage.removeItem(historyKey(sessionId))
+      sessionStorage.removeItem(historyKey(sessionId))
     }
   }, [sessionId])
 
   useEffect(() => {
     if (!sessionId) return
-    localStorage.setItem(historyKey(sessionId), JSON.stringify(messages))
+    sessionStorage.setItem(historyKey(sessionId), JSON.stringify(messages))
   }, [messages, sessionId])
 
   useEffect(() => {
@@ -133,12 +141,16 @@ export default function ChatWidget() {
     setInput('')
     setLoading(true)
 
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
     try {
       const response = await fetch(`${apiBaseUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        signal: controller.signal,
         body: JSON.stringify({
           sessionId,
           message: trimmed
@@ -160,15 +172,20 @@ export default function ChatWidget() {
 
       setMessages((prev) => [...prev, botMsg])
     } catch (error) {
+      let errorText = 'Backend is unreachable. Please make sure the server is running and try again.'
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        errorText = 'Request timed out. Please try again.'
+      }
       const fallback = {
         id: `e-${Date.now()}`,
         role: 'assistant',
-        content: 'Sorry, I could not reach support systems. Please try again.',
+        content: errorText,
         sources: [],
         createdAt: new Date().toISOString()
       }
       setMessages((prev) => [...prev, fallback])
     } finally {
+      clearTimeout(timeoutId)
       setLoading(false)
     }
   }

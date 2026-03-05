@@ -1,3 +1,3 @@
-from .retriever import RAGEngine, RAGSettings
+from .pipeline import PipelineSettings, RAGPipeline
 
-__all__ = ["RAGEngine", "RAGSettings"]
+__all__ = ["RAGPipeline", "PipelineSettings"]

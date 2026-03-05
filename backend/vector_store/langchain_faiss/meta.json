@@ -1,0 +1,7 @@
+{
+  "embedding_model": "text-embedding-3-large",
+  "chunk_size": 1100,
+  "chunk_overlap": 180,
+  "dataset_sha256": "d6d5f21fca18c61116d05006fba7b093ed69cceda099b8441ab14b0c808ef41e",
+  "index_schema_version": "qa_pairs_v1"
+}
