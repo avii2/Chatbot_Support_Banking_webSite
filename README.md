@@ -60,7 +60,6 @@ Assignment_01/
 ```bash
 cd backend
 cp .env.example .env
-# edit .env and set OPENAI_API_KEY
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
@@ -71,7 +70,6 @@ Backend runs at `http://localhost:8000`.
 
 ```bash
 cd frontend
-cp .env.example .env
 npm install
 npm run dev
 ```
