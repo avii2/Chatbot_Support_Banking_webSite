@@ -15,7 +15,7 @@ End-to-end demo banking website with an embedded chatbot widget powered by FastA
 ```text
 Assignment_01/
 ├── backend/
-│   ├── .env.example
+│
 │   ├── config.py
 │   ├── main.py
 │   ├── rag_service.py
@@ -29,8 +29,9 @@ Assignment_01/
 │   │   ├── loan_eligibility.md
 │   │   └── support_escalation.txt
 │   └── storage/
+
 ├── frontend/
-│   ├── .env.example
+│   
 │   ├── index.html
 │   ├── package.json
 │   ├── postcss.config.js
@@ -88,36 +89,4 @@ Frontend runs at `http://localhost:5173`.
    - "How do I escalate a complaint?"
 5. Confirm chatbot replies include source snippets from local docs.
 
-## API Contract
 
-`POST /api/chat`
-
-Request:
-
-```json
-{
-  "sessionId": "abc-123",
-  "message": "What are KYC documents?"
-}
-```
-
-Response:
-
-```json
-{
-  "answer": "...",
-  "sources": [
-    {
-      "doc": "kyc_requirements.txt",
-      "snippet": "Accepted Proof of Identity..."
-    }
-  ]
-}
-```
-
-## Screenshot Placeholders
-
-- `[Screenshot 1: Home page with floating chat button]`
-- `[Screenshot 2: Chat panel open and loading state]`
-- `[Screenshot 3: Answer with cited sources]`
-# Chatbot_Support_Banking_webSite
