@@ -1,0 +1,25 @@
+Card Fees and Charges - Dummy Bank
+
+Credit Card Joining Fee:
+- Platinum Card: INR 999 + taxes
+- Signature Card: INR 2,999 + taxes
+
+Annual Fee:
+- Platinum Card: INR 999 + taxes
+- Signature Card: INR 2,999 + taxes
+
+Annual fee waiver criteria:
+- Platinum Card: waived if annual spend >= INR 1,50,000
+- Signature Card: waived if annual spend >= INR 4,00,000
+
+Cash advance fee:
+- 2.5% of cash amount or INR 500, whichever is higher
+
+Late payment fee (credit cards):
+- Statement balance up to INR 500: Nil
+- INR 501 to INR 5,000: INR 500
+- INR 5,001 to INR 10,000: INR 750
+- Above INR 10,000: INR 1,200
+
+Card replacement fee:
+- INR 250 + taxes for domestic dispatch
