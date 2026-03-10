@@ -6,7 +6,6 @@ from collections import defaultdict, deque
 from pathlib import Path
 from threading import Lock
 
-from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,8 +15,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from rag.pipeline import PipelineSettings, RAGPipeline
 from rag.prompts import REFUSAL_MESSAGE
-
-load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -29,16 +26,14 @@ class AppSettings(BaseSettings):
     openai_api_key: str = Field(..., alias="OPENAI_API_KEY")
     frontend_origin: str = Field("http://localhost:5173", alias="FRONTEND_ORIGIN")
     openai_chat_model: str = Field("gpt-4o-mini", alias="OPENAI_CHAT_MODEL")
-    openai_embedding_model: str = Field(
-        "text-embedding-3-large",
-        alias="OPENAI_EMBEDDING_MODEL",
-    )
+    openai_embedding_model: str = Field("text-embedding-3-large", alias="OPENAI_EMBEDDING_MODEL")
 
     top_k: int = Field(4, alias="TOP_K")
     similarity_threshold: float = Field(0.46, alias="SIMILARITY_THRESHOLD")
     chunk_size: int = Field(1100, alias="CHUNK_SIZE")
     chunk_overlap: int = Field(180, alias="CHUNK_OVERLAP")
     generation_max_tokens: int = Field(320, alias="GENERATION_MAX_TOKENS")
+
     max_message_length: int = Field(1000, alias="MAX_MESSAGE_LENGTH")
     rate_limit_requests: int = Field(20, alias="RATE_LIMIT_REQUESTS")
     rate_limit_window_seconds: int = Field(60, alias="RATE_LIMIT_WINDOW_SECONDS")
