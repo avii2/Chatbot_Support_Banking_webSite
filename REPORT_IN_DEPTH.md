@@ -53,7 +53,7 @@
 ```
 
 ### Runtime Dependencies and Where They Run
-| Layer | Key dependencies (from code) | Runtime location |
+| Layer | Key dependencies  | Runtime location |
 |---|---|---|
 | Frontend app | `react`, `react-dom`, `react-router-dom`, `vite`, `tailwindcss` (`frontend/package.json`) | Browser + Node dev server |
 | Backend API | `fastapi`, `uvicorn`, `pydantic`, `pydantic-settings` (`backend/requirements.txt`) | Python server process |
