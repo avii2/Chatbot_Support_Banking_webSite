@@ -2,28 +2,28 @@
 
 ## 1) Project Summary
 - This project is a demo banking website with an embedded AI support assistant.
-- The frontend presents a multi-page bank UI (`Home`, `Accounts`, `Loans`, `Cards`, `Fees`, `Support`) plus a floating chat widget (`frontend/src/components/ChatWidget.jsx`).
+- The frontend presents a multi-page bank UI (`Home`, `Accounts`, `Loans`, `Cards`, `Fees`, `Support`) plus a floating chat widget.
 - The chatbot answers banking support questions by retrieving content from a local PDF knowledge base and generating a response via OpenAI.
 - If the answer is not supported by retrieved context, the backend returns a fixed refusal message:
   - `I don't have that information in my documents. Please contact support.`
 
 ## 2) Architecture
 - Frontend:
-  - React + Vite + Tailwind (`frontend/src/App.jsx`, `frontend/src/components/ChatWidget.jsx`)
+  - React + Vite + Tailwind 
   - Chat widget calls backend `POST /api/chat`
-  - Optional browser speech recognition (hold Send button)
+  -  browser speech recognition (hold Send button) , i tried but not implemented
 - Backend:
-  - FastAPI app (`backend/main.py`)
+  - FastAPI app 
   - Routes:
-    - `GET /health`
+    - `GET /health` ->  ( not used till now )
     - `POST /api/chat`
-  - RAG orchestration in `backend/rag/pipeline.py`
+  - RAG orchestration 
 - Data / Vector Store:
-  - Source file: `backend/data/dataset.pdf` (or copied from `frontend/dataset.pdf` if missing)
-  - Vector store: FAISS local index in `backend/vector_store/langchain_faiss/`
+  - Source file: `backend/data/dataset.pdf` 
+  - Vector store: FAISS  
 - LLM / Embeddings provider:
-  - OpenAI Chat model (`OPENAI_CHAT_MODEL`, default `gpt-4o-mini`)
-  - OpenAI Embeddings model (`OPENAI_EMBEDDING_MODEL`, default `text-embedding-3-large`)
+  - OpenAI Chat model (`OPENAI_CHAT_MODEL`,  `gpt-4o-mini`)
+  - OpenAI Embeddings model (`OPENAI_EMBEDDING_MODEL`, `text-embedding-3-large`)
 
 
 
@@ -54,20 +54,22 @@
 
 
 ## 3) End-to-End Request Flow
-- User opens the chat bubble in the frontend (`ChatWidget`).
-- Widget creates/loads a `sessionId` in `sessionStorage` and keeps message history per session in `sessionStorage`.
-- User submits text (or holds Send for speech input).
+- User opens the chat bubble in the frontend .
+- frontend creates/loads a `sessionId` in `sessionStorage` and keeps message history per session in `sessionStorage`.
+- User submits text .
 - Frontend sends `POST {apiBaseUrl}/api/chat` with JSON:
   - `sessionId`
   - `message`
-- Backend (`backend/main.py`) processes request:
+- Backend  processes request:
   - Validates request schema and lengths
   - Applies per-session/IP rate limiting
   - Calls `pipeline.run(session_id, user_query)`
+ 
+    
 - Pipeline (`backend/rag/pipeline.py`):
   - Sanitizes potential prompt-injection patterns
-  - Rewrites query (grammar correction only)
-  - Retrieves top-K chunks from FAISS
+  - Rewrites query (grammar and language changes correction only)
+  - Retrieves top-5 chunks from FAISS
   - Checks confidence threshold
   - Checks context answerability
   - Generates answer using context-only prompt
@@ -80,7 +82,7 @@
 - Initialization happens at backend startup (`@app.on_event("startup")` -> `pipeline.initialize()`).
 - `VectorIndexManager.load_or_build()` in `backend/rag/index.py`:
   - Ensures data/vector-store directories exist.
-  - Ensures `backend/data/dataset.pdf` exists (copies from frontend PDF if needed).
+  - Ensures `backend/data/dataset.pdf` exists .
   - Computes expected metadata (`embedding_model`, chunk params, dataset hash, schema version).
   - If FAISS index + metadata match, loads existing index.
   - Otherwise rebuilds index.
