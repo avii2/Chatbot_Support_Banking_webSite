@@ -2,21 +2,20 @@
 
 ## Project Snapshot
 - The project is a React banking UI with an embedded chatbot that answers from a local PDF knowledge base.
-- Frontend chat lives in `frontend/src/components/ChatWidget.jsx` and calls backend `POST /api/chat`.
-- Backend API is FastAPI in `backend/main.py` with two routes: `GET /health` and `POST /api/chat`.
-- Retrieval and generation are orchestrated by `RAGPipeline` in `backend/rag/pipeline.py`.
-- Vector index is local FAISS under `backend/vector_store/langchain_faiss/`.
+- Backend API is FastAPI  two routes: `GET /health` and `POST /api/chat`.
+- Retrieval and generation are orchestrated by `RAGPipeline`.
+- Vector index is local FAISS.
 - Embeddings and LLM calls use OpenAI via `langchain-openai`.
-- The backend uses a strict refusal strategy when retrieval confidence/grounding is insufficient.
+- The backend uses a strict refusal strategy when retrieval grounding is insufficient.
 
 ## Architecture (Runtime)
 ```text
-[Browser: React + Tailwind]
-  App.jsx + ChatWidget.jsx
+Browser: React + Tailwind 
+ 
             |
             | POST /api/chat
             v
-[FastAPI: backend/main.py]
+[FastAPI: backend ]
             |
             v
 [RAGPipeline: backend/rag/pipeline.py]
@@ -27,9 +26,9 @@
    | grounding check (OpenAI)
             |
             v
-[Response JSON: {answer, sources}]
+Response JSON: {answer, sources}
 
-[Index build/load path]
+Index build/load path
 backend/rag/index.py -> backend/data/dataset.pdf -> FAISS files + meta.json
 ```
 
@@ -60,8 +59,7 @@ backend/rag/index.py -> backend/data/dataset.pdf -> FAISS files + meta.json
   - Pydantic schema validation
   - message length guard (`MAX_MESSAGE_LENGTH`)
   - in-memory IP+session rate limiting
-  - restricted CORS origin list from `FRONTEND_ORIGIN`
-
+ 
 ## Local Run
 ```bash
 # Backend
@@ -79,7 +77,7 @@ npm run dev
 - Frontend: `http://localhost:5173`
 - Backend health: `http://127.0.0.1:8000/health`
 
-## Important Gaps
+##  future improvements improvements 
 - Source citations are modeled (`Source` schema) but actual citation payload generation is not implemented in `RAGPipeline.run` (returns `sources: []`).
 - No authentication/authorization layer is present for chat API.
 - No production deployment manifests (Docker/K8s/CI) found in code.
