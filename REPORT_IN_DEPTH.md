@@ -15,7 +15,7 @@
 ### Component Diagram (ASCII)
 ```text
 +---------------------------------------------------------------+
-| Browser (React + Vite + Tailwind)                            |
+| Browser                             
 | - frontend/src/App.jsx                                        |
 | - frontend/src/components/ChatWidget.jsx                      |
 | - storage: sessionStorage/localStorage                        |
