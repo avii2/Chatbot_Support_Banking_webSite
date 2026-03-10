@@ -97,7 +97,7 @@
 - Hard refusal strategy:
   - If data is missing/unclear/not grounded, return fixed refusal message.
 - Retrieval confidence gate:
-  - Converts FAISS distance to confidence (`1 / (1 + distance)`), refuses if top score < `SIMILARITY_THRESHOLD` (default `0.46`).
+  - Converts FAISS distance to confidence (`1 / (1 + distance)`), refuses if top score < `SIMILARITY_THRESHOLD` ( `0.46`).
 - Multi-step verification:
   - Context answerability check (`ANSWERABLE` / `NOT_ANSWERABLE`).
   - Grounding check (`SUPPORTED` / `UNSUPPORTED`) after generation.
