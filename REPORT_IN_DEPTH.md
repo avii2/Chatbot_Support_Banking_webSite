@@ -68,12 +68,11 @@
 - File: `frontend/src/components/ChatWidget.jsx`
 - Main component: `export default function ChatWidget()`.
 - UX behavior:
-  - Floating round button toggles chat open/closed (`open` state).
+  - Floating round button toggles chat open/closed.
   - Chat panel shows user and assistant messages with role-based styling.
-  - Textarea supports Enter-to-send (`onInputKeyDown` with `Enter` and no `Shift`).
+  - Textarea supports Enter-to-send.
   - Loading indicator shows animated dots while request is in-flight.
-  - Assistant "Sources" block is rendered only when `msg.sources.length > 0`.
-
+ 
 ### State Management (session/local storage)
 - Chat session and history:
   - `SESSION_STORAGE_KEY = 'dummybank_chat_session_id'`
