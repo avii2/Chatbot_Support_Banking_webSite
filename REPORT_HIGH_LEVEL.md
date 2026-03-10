@@ -2,7 +2,7 @@
 
 ## Project Snapshot
 - The project is a React banking UI with an embedded chatbot that answers from a local PDF knowledge base.
-- Backend API is FastAPI  two routes: `GET /health` and `POST /api/chat`.
+- Backend API is FastAPI  one  route: `POST /api/chat`.
 - Retrieval and generation are orchestrated by `RAGPipeline`.
 - Vector index is local FAISS.
 - Embeddings and LLM calls use OpenAI via `langchain-openai`.
