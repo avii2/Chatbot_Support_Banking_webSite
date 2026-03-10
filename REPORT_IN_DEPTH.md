@@ -2,10 +2,10 @@
 
 ## A) Executive Summary
 - This repository implements a banking-themed web app with an embedded RAG chatbot.
-- The UI is a React SPA (`frontend/src/App.jsx`) and the chatbot widget is implemented in `frontend/src/components/ChatWidget.jsx`.
-- The backend is a FastAPI service (`backend/main.py`) exposing exactly two routes: `GET /health` and `POST /api/chat`.
-- Retrieval and generation are coordinated by `RAGPipeline` (`backend/rag/pipeline.py`), which uses OpenAI for rewriting, answering, and verification.
-- The knowledge base is a local PDF (`backend/data/dataset.pdf`) indexed into FAISS (`backend/vector_store/langchain_faiss/`).
+- The UI is a React  and the chatbot widget is implemented in `frontend/src/components/ChatWidget.jsx`.
+- The backend is a FastAPI service  exposing exactly one  routes:  `POST /api/chat`.
+- Retrieval and generation are coordinated by `RAGPipeline`, which uses OpenAI for rewriting, answering, and verification.
+- The knowledge base is a local PDF indexed into FAISS .
 - Anti-hallucination is enforced by multiple gates: similarity threshold, answerability check, grounding check, and strict refusal fallback.
 - The frontend supports language selection and browser speech recognition; speech-to-text is client-side only.
 - Source citation objects exist in schema/UI, but response citation payload generation is currently not implemented (`sources` is returned as an empty list).
