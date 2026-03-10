@@ -53,9 +53,9 @@
 ```
 
 ### Runtime Dependencies and Where They Run
-| Layer | Key dependencies  | Runtime location |
+| Layer    | Key dependencies  | Runtime location |
 |---|---|---|
-| Frontend app | `react`, `react-dom`, `react-router-dom`, `vite`, `tailwindcss` (`frontend/package.json`) | Browser + Node dev server |
+| Frontend app | `react`, `react-dom`, `react-router-dom`, `vite`, `tailwindcss`  | Browser + Node dev server |
 | Backend API | `fastapi`, `uvicorn`, `pydantic`, `pydantic-settings` (`backend/requirements.txt`) | Python server process |
 | RAG stack | `langchain`, `langchain-openai`, `langchain-community`, `openai` | Python server process + outbound OpenAI API |
 | Vector store | `faiss-cpu` | Python server process + local filesystem |
